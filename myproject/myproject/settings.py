@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-rfle1-(qf*=ua19$wvtrxok$u3qxfaajt=i@-i6ddzr-tzfl7#
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['192.168.1.57', 'domain_anda.com', 'www.domain_anda.com']
 
 
 # Application definition
