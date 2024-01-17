@@ -16,7 +16,10 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from crypto.views import CryptoDataList  # Ubah impor ini
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('api/crypto_data/', CryptoDataList.as_view()),  # Gunakan CryptoDataList di sini
 ]
+
