@@ -11,11 +11,20 @@ class Command(BaseCommand):
 
     def handle(self, *args, **kwargs):
         cryptos = [
+            "EMTK.JK", "ACES.JK", "ADRO.JK", "AKRA.JK", "AMRT.JK", "ANTM.JK",
+            "ARTO.JK", "ASII.JK", "BBCA.JK", "BBNI.JK", "BBRI.JK", "BBTN.JK",
+            "BMRI.JK", "BRPT.JK", "CPIN.JK", "ESSA.JK", "EXCL.JK", "GGRM.JK",
+            "HRUM.JK", "ICBP.JK", "INDY.JK", "INKP.JK", "INTP.JK", "ITMG.JK",
+            "KLBF.JK", "MAPI.JK", "MDKA.JK", "MEDC.JK", "PTBA.JK", "SCMA.JK",
+            "SIDO.JK", "SRTG.JK", "TBIG.JK", "TLKM.JK", "TOWR.JK", "TPIA.JK",
+            "UNVR.JK", "BRIS.JK", "BUKA.JK", "GOTO.JK", "SMGR.JK", "UNTR.JK",
+            "INCO.JK", "INDF.JK", "PGAS.JK",
+            
             "BTC-USD", "ETH-USD", "SOL-USD", "ADA-USD",
             "BNB-USD", "XRP-USD", "DOGE-USD",
             "LTC-USD", "MATIC-USD", "LINK-USD", "FLOW-USD",
             "THETA-USD", "API3-USD", "MANA-USD", "MTL-USD",
-            "ICP-USD", "ETH-BTC"
+            "ICP-USD", "ETH-BTC", "MATIC-BTC",
         ]
 
         # Looping terus menerus
@@ -26,18 +35,19 @@ class Command(BaseCommand):
 
     def update_crypto_data(self, symbol):
         try:
+            # Normalisasi simbol: mengganti titik dengan strip
+            normalized_symbol = symbol.replace('.', '-')
+
             end_date = datetime.now()
             start_date = end_date - timedelta(days=7)
 
-            # Cek data terakhir di database
-            last_entry = CryptoData.objects.filter(symbol=symbol).order_by('-datetime').first()
+            # Cek data terakhir di database menggunakan simbol yang dinormalisasi
+            last_entry = CryptoData.objects.filter(symbol=normalized_symbol).order_by('-datetime').first()
             if last_entry:
                 last_date = last_entry.datetime.replace(tzinfo=None)
-                # Memastikan kita tidak mengunduh data yang sudah ada
                 if last_date >= start_date:
                     start_date = last_date + timedelta(minutes=1)
 
-            # Hanya unduh dan simpan jika ada data baru
             if start_date < end_date:
                 new_data = yf.download(symbol, start=start_date, end=end_date, interval='1m')
                 if not new_data.empty:
@@ -45,7 +55,7 @@ class Command(BaseCommand):
 
                     for _, row in new_data.iterrows():
                         CryptoData.objects.create(
-                            symbol=symbol,
+                            symbol=normalized_symbol,  # Gunakan simbol yang dinormalisasi
                             datetime=row['Datetime'],
                             open_price=row['Open'],
                             high_price=row['High'],

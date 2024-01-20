@@ -22,10 +22,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-rfle1-(qf*=ua19$wvtrxok$u3qxfaajt=i@-i6ddzr-tzfl7#'
 
-# SECURITY WARNING: don't run with debug turned on in production!
+# SECURITY WARNING: don't run with debug turned on in production!s
 DEBUG = True
 
-ALLOWED_HOSTS = ['192.168.1.57', 'domain_anda.com', 'www.domain_anda.com']
+ALLOWED_HOSTS = ['66.42.63.0', 'domain_anda.com', 'www.domain_anda.com']
 
 
 # Application definition
@@ -82,7 +82,7 @@ DATABASES = {
         'NAME': 'mydatabase',
         'USER': 'root',
         'PASSWORD': 'Makanmakan3x*',
-        'HOST': 'localhost',
+        'HOST': '66.42.63.0',
         'PORT': '3306',
     }
 }
